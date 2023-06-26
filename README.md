@@ -9,8 +9,13 @@ Warehouse derived from multiple tables from the source database. This Data Wareh
 
 ### 1. Import/restore the Staging database
 
-One of the clients from ID/X Partners engaged in the field of e-commerce has a need to create Data
-Warehouse derived from multiple tables from the source database. This Data Warehouse will later consist of one Fact table and multiple Dimension tables.
+To restore the Staging database can be done using the SQL Server Management Studio (SSMS) application with the following steps:
+
+- Right-click the **Databases** node in **Object Explorer** and select **Restore Database...**.
+- Select **Device:**, then select ellipses (...) to locate the backup file.
+- Select **Add** and navigate to where the .bak file is located, in this case `Staging.bak`. Select the .bak file then select **OK**.
+- Select **OK** to close the **Select backup devices** dialog box.
+- Select **OK** to restore the Staging database.
 
 ### 2. Create a database named DWH_Project, and create Fact and Dimension tables from the tables in the Staging database
 
