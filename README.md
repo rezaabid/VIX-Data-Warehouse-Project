@@ -17,6 +17,10 @@ To restore the Staging database can be done using the SQL Server Management Stud
 - Select **OK** to close the **Select backup devices** dialog box.
 - Select **OK** to restore the Staging database.
 
+The following is the Staging database schema:
+
+<div align="center"><img src="https://drive.google.com/uc?export=view&id=12wtje7-s1769VsSrkNEy3_BiylL6MazS"></div>
+
 ### 2. Create a database named DWH_Project, and create Fact and Dimension tables from the tables in the Staging database
 
 One of the clients from ID/X Partners engaged in the field of e-commerce has a need to create Data
