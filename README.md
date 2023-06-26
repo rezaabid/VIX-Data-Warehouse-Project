@@ -63,5 +63,90 @@ The following is a view of the Job flow that has been created:
 
 ### 4. Create a Store Procedure (SP) to display summary sales order based on delivery status
 
-One of the clients from ID/X Partners engaged in the field of e-commerce has a need to create Data
-Warehouse derived from multiple tables from the source database. This Data Warehouse will later consist of one Fact table and multiple Dimension tables.
+Store Procedure to display summary sales order based on delivery status is done by writing SQL query in SQL Server Management Studio (SSMS) application. This can be done by right-clicking the DWH_Project database on the **Databases** node and selecting **New Query**.
+
+The syntax of Store Procedure `summary_order_status` is as follows:
+
+```sql
+CREATE PROCEDURE dbo.summary_order_status
+(
+	@StatusID int
+)
+AS
+BEGIN
+	SELECT FSO.OrderID, DC.CustomerName, DP.ProductName, FSO.Quantity, DSO.StatusOrder
+	FROM FactSalesOrder FSO
+	JOIN DimCustomer DC ON FSO.CustomerID = DC.CustomerID
+	JOIN DimProduct DP ON FSO.ProductID = DP.ProductID
+	JOIN DimStatusOrder DSO ON FSO.StatusID = DSO.StatusID
+	WHERE DSO.StatusID = @StatusID;
+END;
+```
+
+The summary sales order for delivery status "Awaiting Payment" or `StatusID = 1` is obtained by executing the following syntax:
+
+ ```sql
+EXEC dbo.summary_order_status @StatusID = 1;
+```
+
+With the results as follows:
+
+| OrderID | CustomerName | ProductName | Quantity | StatusOrder |
+|---------|--------------|-------------|----------|-------------|
+| 1303 | BUDISANTOSO | Macbook Air 2020 13 inch | 1 | Awaiting Payment |
+| 1310 | LIARAHMAWATI | Kipas Angin Cosmos | 2 | Awaiting Payment |
+
+The summary sales order for delivery status "Awaiting Shipment" or `StatusID = 2` is obtained by executing the following syntax:
+
+ ```sql
+EXEC dbo.summary_order_status @StatusID = 2;
+```
+
+With the results as follows:
+
+| OrderID | CustomerName | ProductName | Quantity | StatusOrder |
+|---------|--------------|-------------|----------|-------------|
+| 1301 | LIARAHMAWATI | Converse Cap Original | 2 | Awaiting Shipment |
+| 1304 | AJENGSRIASIH | T-Shirt Polo Nevada | 2 | Awaiting Shipment |
+| 1307 | RAHMAAMELIA | Pull & Bear T-Shirt | 1 | Awaiting Shipment |
+
+The summary sales order for delivery status "Shipped" or `StatusID = 3` is obtained by executing the following syntax:
+
+ ```sql
+EXEC dbo.summary_order_status @StatusID = 3;
+```
+
+With the results as follows:
+
+| OrderID | CustomerName | ProductName | Quantity | StatusOrder |
+|---------|--------------|-------------|----------|-------------|
+| 1305 | BAGUSPRAKOSO | Blender Philips 500 watt | 3 | Shipped |
+| 1308 | BELAADRILIA | Luciana Set Dress 2 in 1 | 2 | Shipped |
+
+The summary sales order for delivery status "Completed" or `StatusID = 4` is obtained by executing the following syntax:
+
+ ```sql
+EXEC dbo.summary_order_status @StatusID = 4;
+```
+
+With the results as follows:
+
+| OrderID | CustomerName | ProductName | Quantity | StatusOrder |
+|---------|--------------|-------------|----------|-------------|
+| 1302 | RIFKIMUHAMMAD | HP Elitebook 840 G4 | 1 | Completed |
+| 1306 | RIFKIMUHAMMAD | Asus Zenbook 800 | 1 | Completed |
+| 1309 | AJENGSRIASIH | Bagpack Navy Club | 1 | Completed |
+
+The summary sales order for delivery status "Cancelled" or `StatusID = 5` is obtained by executing the following syntax:
+
+ ```sql
+EXEC dbo.summary_order_status @StatusID = 5;
+```
+
+With the results as follows:
+
+| OrderID | CustomerName | ProductName | Quantity | StatusOrder |
+|---------|--------------|-------------|----------|-------------|
+|  |  |  |  |  |
+
+Note that for delivery status "Cancelled" or `StatusID = 5` does not display the summary sales order. This is because in the `FactSalesOrder` table there are no records worth of 5 for the `StatusID` column or there are no canceled orders.
