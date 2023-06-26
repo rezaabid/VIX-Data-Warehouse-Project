@@ -31,7 +31,7 @@ Determination of table names and table column names for the DWH_Project database
 
 The following is the schema of the DWH_Project database:
 
-<div align="center"><img src="https://drive.google.com/uc?export=view&id=1sw15UIyUNA833oInyu9ohJ3CbRsFVTOl"></div>
+<div align="center"><img src="https://drive.google.com/uc?export=view&id=1sw15UIyUNA833oInyu9ohJ3CbRsFVTOl"></div><br>
 
 Note that in the DimCustomer table, there is a CustomerName column and no FirstName or LastName columns. This is because in the next process, a data transformation is performed by converting the data in the FirstName and LastName columns to uppercase and combining them into only one column, CustomerName.
 
